@@ -112,6 +112,7 @@ module.exports = {
                   'style': 'css'
                 }
               ],
+              'transform-decorators-legacy',
             ]
           }
         },

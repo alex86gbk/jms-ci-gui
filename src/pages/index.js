@@ -1,5 +1,6 @@
-import React from 'React'
+import React from 'React';
 import ReactDOM from 'ReactDOM';
+import { observable, action } from 'mobx';
 import { Layout } from 'antd';
 import SiderMenu from '../components/SiderMenu/SiderMenu';
 import GlobalHeader from '../components/GlobalHeader/GlobalHeader';
@@ -12,13 +13,26 @@ import quickStart from '../assets/images/quick-start.svg';
 const { Header, Content, Footer } = Layout;
 
 /**
+ * StoreSider
+ */
+class StoreSider {
+  @observable collapsed = false;
+
+  @action
+  onCollapse = (collapsed) => {
+    this.collapsed = !collapsed;
+  }
+}
+
+const storeSider = new StoreSider();
+
+/**
  * 项目配置
  */
 class Projects extends React.Component {
   state = {
     data: [],
     loading: false,
-    collapsed: false,
   };
 
   /**
@@ -30,9 +44,8 @@ class Projects extends React.Component {
 
   /**
    * 获取项目列表
-   * @param {Number} [pageIndex]
    */
-  getData = (pageIndex) => {
+  getData = () => {
     this.setState({ loading: true });
     service.getProjectList({
       payload: {},
@@ -44,17 +57,12 @@ class Projects extends React.Component {
     });
   };
 
-  onCollapse = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-
   /**
    * 渲染
    * @return {XML}
    */
   render() {
+    const { loading, data } = this.state;
     const contentTitle = (
       <p>
         在这里添加，配置项目。包括名称，图标，介绍，本地项目路径，远程发布路径。
@@ -73,13 +81,12 @@ class Projects extends React.Component {
     return (
       <Layout>
         <SiderMenu
-          collapsed={this.state.collapsed}
+          store={storeSider}
         />
         <Layout>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
-              collapsed={this.state.collapsed}
-              onCollapse={this.onCollapse}
+              store={storeSider}
             />
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
@@ -88,8 +95,8 @@ class Projects extends React.Component {
               contentTitle={contentTitle}
               contentLink={contentLink}
               extraImg={extraImg}
-              loading={this.state.loading}
-              list={this.state.data}
+              loading={loading}
+              list={data}
             />
           </Content>
           <Footer style={{ textAlign: 'center' }}>

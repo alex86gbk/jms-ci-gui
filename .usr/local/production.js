@@ -68,6 +68,7 @@ const production = {
                   'style': 'css'
                 }
               ],
+              'transform-decorators-legacy',
             ]
           }
         },
