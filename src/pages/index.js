@@ -18,6 +18,7 @@ class Projects extends React.Component {
   state = {
     data: [],
     loading: false,
+    collapsed: false,
   };
 
   /**
@@ -37,8 +38,15 @@ class Projects extends React.Component {
       payload: {},
     }).then((res) => {
       this.setState({
+        loading: false,
         data: res.list,
       });
+    });
+  };
+
+  onCollapse = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
     });
   };
 
@@ -63,31 +71,37 @@ class Projects extends React.Component {
     );
 
     return (
-      <CardList
-        title="项目配置"
-        contentTitle={contentTitle}
-        contentLink={contentLink}
-        extraImg={extraImg}
-        list={this.state.data}
-      />
+      <Layout>
+        <SiderMenu
+          collapsed={this.state.collapsed}
+        />
+        <Layout>
+          <Header style={{ padding: 0 }}>
+            <GlobalHeader
+              collapsed={this.state.collapsed}
+              onCollapse={this.onCollapse}
+            />
+          </Header>
+          <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+            <CardList
+              title="项目配置"
+              contentTitle={contentTitle}
+              contentLink={contentLink}
+              extraImg={extraImg}
+              loading={this.state.loading}
+              list={this.state.data}
+            />
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>
+            JMS CI ©2019 Created by Alex
+          </Footer>
+        </Layout>
+      </Layout>
     );
   }
 }
 
 ReactDOM.render(
-  <Layout>
-    <SiderMenu />
-    <Layout style={{ marginLeft: 200 }}>
-      <Header style={{ padding: 0 }}>
-        <GlobalHeader />
-      </Header>
-      <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-        <Projects />
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        JMS CI ©2019 Created by Alex
-      </Footer>
-    </Layout>
-  </Layout>,
+  <Projects />,
   document.getElementById('app')
 );

@@ -8,18 +8,25 @@ const { Sider } = Layout;
 /**
  * 侧边栏菜单
  */
-export default class SiderMenu extends React.Component {
+class SiderMenu extends React.Component {
   /**
    * 渲染
    * @return {XML}
    */
   render() {
+    const { collapsed } = this.props;
+
     return (
-      <Sider className={styles.sider}>
+      <Sider
+        breakpoint="lg"
+        className={styles.sider}
+        collapsed={collapsed}
+      >
         <div className={styles.logo}>
-          <span className={styles.container}>
+          <div className={styles.container}>
             <img src={logo} alt="logo" />
-          </span>
+          </div>
+          <h1>JMS-CI</h1>
         </div>
         <Menu
           theme="dark"
@@ -40,3 +47,5 @@ export default class SiderMenu extends React.Component {
     );
   }
 }
+
+export default SiderMenu;

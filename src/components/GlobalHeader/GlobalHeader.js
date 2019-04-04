@@ -5,10 +5,10 @@ import styles from './GlobalHeader.less';
 /**
  * 头部导航
  */
-export default class GlobalHeader extends React.Component {
+class GlobalHeader extends React.Component {
   toggle = () => {
-    const { collapsed, onCollapse } = this.props;
-    onCollapse(!collapsed);
+    const { onCollapse } = this.props;
+    onCollapse();
   };
 
   /**
@@ -17,6 +17,7 @@ export default class GlobalHeader extends React.Component {
    */
   render() {
     const { collapsed } = this.props;
+
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]}>
         <Menu.Item disabled>
@@ -54,3 +55,5 @@ export default class GlobalHeader extends React.Component {
     );
   }
 }
+
+export default GlobalHeader;

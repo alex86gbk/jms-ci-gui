@@ -3,7 +3,6 @@
 .logo {
   height: 64px;
   position: relative;
-  padding-left: (@menu-collapsed-width - 32px) / 2;
   transition: all 0.3s;
   background: #002140;
   overflow: hidden;
@@ -26,15 +25,11 @@
 .sider {
   min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-  position: fixed;
-  left: 0;
   z-index: 10;
   .container {
-    background-color: white;
-    padding: 5px 10px;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    background: rgba(255,255,255,.4);
+    padding: 6px;
+    margin: 10px;
   }
   &.ligth {
     background-color: white;
