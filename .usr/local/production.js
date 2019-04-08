@@ -64,8 +64,7 @@ const production = {
                 'import',
                 {
                   'libraryName': 'antd',
-                  'libraryDirectory': 'es',
-                  'style': 'css'
+                  'style': true
                 }
               ],
               'transform-decorators-legacy',
@@ -111,11 +110,35 @@ const production = {
               loader: 'postcss-loader'
             },
             {
-              loader: 'less-loader'
+              loader: 'less-loader',
+              options: {
+                javascriptEnabled: true,
+              }
             },
           ]
         }),
-        exclude: /assets/
+        include: /src/
+      },
+      {
+        test: /\.less$/,
+        use: ExtractTextWebpackPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader'
+            },
+            {
+              loader: 'less-loader',
+              options: {
+                javascriptEnabled: true,
+              }
+            },
+          ]
+        }),
+        exclude: /src/
       },
       {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,

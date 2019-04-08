@@ -1,6 +1,5 @@
 import React from 'React';
 import ReactDOM from 'ReactDOM';
-import { observable, action } from 'mobx';
 import { Layout } from 'antd';
 import SiderMenu from '../components/SiderMenu/SiderMenu';
 import GlobalHeader from '../components/GlobalHeader/GlobalHeader';
@@ -10,21 +9,9 @@ import * as service from '../services/commonServices';
 import extraImg from '../assets/images/project.png';
 import quickStart from '../assets/images/quick-start.svg';
 
+import storeSider from '../stores/Sider';
+
 const { Header, Content, Footer } = Layout;
-
-/**
- * StoreSider
- */
-class StoreSider {
-  @observable collapsed = false;
-
-  @action
-  onCollapse = (collapsed) => {
-    this.collapsed = !collapsed;
-  }
-}
-
-const storeSider = new StoreSider();
 
 /**
  * 项目配置

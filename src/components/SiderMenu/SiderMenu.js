@@ -23,6 +23,7 @@ class SiderMenu extends React.Component {
         breakpoint="lg"
         className={styles.sider}
         collapsed={store.collapsed}
+        onBreakpoint={store.onBreakpoint}
       >
         <div className={styles.logo}>
           <div className={styles.container}>

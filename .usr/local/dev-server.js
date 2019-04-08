@@ -108,8 +108,7 @@ module.exports = {
                 'import',
                 {
                   'libraryName': 'antd',
-                  'libraryDirectory': 'es',
-                  'style': 'css'
+                  'style': true
                 }
               ],
               'transform-decorators-legacy',
@@ -149,10 +148,11 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
             }
           },
           {
-            loader: 'postcss-loader'
+            loader: 'postcss-loader',
           },
           {
             loader: 'less-loader',
@@ -161,7 +161,28 @@ module.exports = {
             }
           },
         ],
-        exclude: /assets/
+        include: /src/
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'postcss-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            }
+          },
+        ],
+        exclude: /src/
       },
       {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,

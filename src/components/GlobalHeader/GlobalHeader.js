@@ -18,7 +18,8 @@ class GlobalHeader extends React.Component {
    * @return {XML}
    */
   render() {
-    const { collapsed } = this.props;
+    const { store } = this.props;
+    const { collapsed } = store;
 
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]}>
