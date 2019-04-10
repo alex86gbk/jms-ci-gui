@@ -53,13 +53,13 @@ const CreateProjectForm = Form.create()(
     }
 
     renderFileList = (data) => {
-      if (data.avatar) {
+      if (data.icon) {
         this.setState({
           fileList: [{
             uid: data.id,
-            name: '图片',
+            name: '图标',
             status: 'done',
-            url: data.avatar,
+            url: data.icon,
           }],
         });
       } else {

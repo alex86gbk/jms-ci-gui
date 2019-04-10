@@ -9,6 +9,7 @@ import styles from './CardList.less';
 
 import extraImg from '../../assets/images/project.png';
 import quickStart from '../../assets/images/quick-start.svg';
+import defaultIcon from '../../assets/images/default.png';
 
 /**
  * 项目列表
@@ -105,9 +106,7 @@ export default class ProjectList extends PureComponent {
     });
   };
 
-  confirmDeleteItem = () => {};
-
-  cancelDeleteItem = () => {};
+  confirmDeleteItem = (projectId) => {};
 
   saveCreateItemFormRef = (formRef) => {
     this.createItemFormRef = formRef;
@@ -175,8 +174,7 @@ export default class ProjectList extends PureComponent {
           />
           <Popconfirm
             title="确定删除该项目？"
-            onConfirm={this.confirmDeleteItem}
-            onCancel={this.cancelDeleteItem}
+            onConfirm={() => this.confirmDeleteItem(item.id)}
             okText="确定"
             cancelText="取消"
           >
@@ -189,6 +187,28 @@ export default class ProjectList extends PureComponent {
           </Popconfirm>
         </Fragment>
       );
+    };
+
+    /**
+     * 操作
+     */
+    const actions = (item) => {
+      if (!item.isPackaging && !item.isPublishing) {
+        return [
+          <a onClick={this.handlePackageProject}>打包</a>,
+          <a onClick={() => this.handlePublishProject(item.id)}>发布</a>,
+        ];
+      } else if (item.isPackaging && !item.isPublishing) {
+        return [
+          <span className={styles.disabled}>打包中 ...</span>,
+          <span className={styles.disabled}>发布</span>,
+        ];
+      } else if (!item.isPackaging && item.isPublishing) {
+        return [
+          <span className={styles.disabled}>打包</span>,
+          <span className={styles.disabled}>发布中 ...</span>,
+        ];
+      }
     };
 
     return (
@@ -230,17 +250,10 @@ export default class ProjectList extends PureComponent {
                     title={<a href={item.previewUrl} target="_blank" rel="noopener noreferrer">{item.name}</a>}
                     extra={extraOperation(item)}
                     className={styles.card}
-                    actions={[
-                      !item.isPackaging
-                        ? (<a onClick={this.handlePackageProject}>打包</a>)
-                        : (<span className={styles.disabled}>打包中 ...</span>),
-                      !item.isPublishing
-                        ? (<a onClick={() => this.handlePublishProject(item.id)}>发布</a>)
-                        : (<span className={styles.disabled}>发布中 ...</span>),
-                    ]}
+                    actions={actions(item)}
                   >
                     <Card.Meta
-                      avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
+                      avatar={<img alt="" className={styles.cardAvatar} src={item.icon ? item.icon : defaultIcon} />}
                       title={item.description}
                       description={item.localPath}
                     />

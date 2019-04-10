@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import { Menu, Icon, Dropdown, Avatar } from 'antd';
 import styles from './GlobalHeader.less';
 
+import avatar from '../../assets/images/avatar_24px.png';
+
 /**
  * 头部导航
  */
@@ -53,8 +55,8 @@ class GlobalHeader extends React.Component {
         <div className={styles.right}>
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
-              <Avatar size="small" className={styles.avatar} src="" />
-              <span className={styles.name}>name</span>
+              <Avatar size="small" className={styles.avatar} src={avatar} />
+              <span className={styles.name}>Dev</span>
             </span>
           </Dropdown>
         </div>

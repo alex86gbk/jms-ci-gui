@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Layout, Menu, Icon } from 'antd';
 import styles from './SiderMenu.less';
-import logo from '../../assets/images/jms.png';
+import logo from '../../assets/images/logo.svg';
 
 import projectRC from '../../../.projectrc';
 
@@ -48,8 +48,8 @@ class SiderMenu extends React.Component {
         <div className={styles.logo}>
           <img src={logo} alt="logo" />
           <h1>
-            JMS-
-            <sub>CI</sub>
+            JMS -
+            <sub>&nbsp;CI</sub>
           </h1>
         </div>
         <Menu
