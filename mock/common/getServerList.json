@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "id": 1,
+      "name": "10.0.2.151",
+      "host": "10.0.2.151",
+      "platform": "windows",
+      "avatar": "/assets/img/hub.png",
+      "description": "联调测试环境服务器",
+      "username": "ssh_user",
+      "auth": "key",
+      "key": "",
+      "callNo": 25,
+      "latestPublishAt": "2019-4-09 16:00:00",
+      "status": 1,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 2,
+      "name": "10.0.3.50",
+      "host": "10.0.3.50",
+      "platform": "linux",
+      "avatar": "/assets/img/assets.png",
+      "description": "本地测试环境服务器",
+      "username": "ssh_user",
+      "auth": "password",
+      "password": "111111",
+      "callNo": 0,
+      "latestPublishAt": "",
+      "status": 0,
+      "previewUrl": "http://localhost:8080/index.html"
+    }
+  ]
+}

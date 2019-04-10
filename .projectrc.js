@@ -7,7 +7,7 @@ module.exports = {
   },
   "dev": {
     "port": 8080,
-    "startPage": "/templates/index.ejs",
+    "startPage": "/templates/project.ejs",
   },
   "publicPath": [],
   "publicApiHost": {

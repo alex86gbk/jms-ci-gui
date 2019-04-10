@@ -33,12 +33,12 @@ class GlobalHeader extends React.Component {
         </Menu.Item>
         <Menu.Item key="triggerError">
           <Icon type="close-circle" />
-          触发报错
+          错误日志
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">
           <Icon type="logout" />
-          退出登录
+          退出
         </Menu.Item>
       </Menu>
     );

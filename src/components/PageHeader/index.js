@@ -31,7 +31,7 @@ export default class PageHeader extends PureComponent {
       activeKeyProps.activeKey = tabActiveKey;
     }
 
-    return (
+    return !title && !logo && !content && !extraContent ? null : (
       <div className={clsString}>
         <div className={styles.detail}>
           {logo && <div className={styles.logo}>{logo}</div>}

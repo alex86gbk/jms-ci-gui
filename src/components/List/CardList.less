@@ -1,4 +1,5 @@
 @import '~antd/lib/style/themes/default.less';
+@import '../utils/utils.less';
 
 .cardList {
   margin-bottom: -24px;
@@ -15,6 +16,9 @@
       }
       .ant-card-actions {
         background: #f7f9fa;
+        .ant-spin-spinning {
+          margin-right: 5px;
+        }
       }
       .ant-card-body:hover {
         .ant-card-meta-title > a {
@@ -55,7 +59,6 @@
 .cardAvatar {
   width: 48px;
   height: 48px;
-  border-radius: 48px;
 }
 
 .pageHeaderContent {
@@ -74,6 +77,10 @@
     vertical-align: middle;
     margin-right: 8px;
   }
+}
+
+.disabled {
+  color: #cecece;
 }
 
 @media screen and (max-width: @screen-lg) {

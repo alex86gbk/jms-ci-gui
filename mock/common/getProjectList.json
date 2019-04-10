@@ -2,9 +2,91 @@
   "list": [
     {
       "id": 1,
-      "title": "桌面管理",
-      "avatar": "",
-      "description": "智慧校园桌面"
+      "name": "桌面管理",
+      "avatar": "/assets/img/hub.png",
+      "description": "智慧校园桌面",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.Hub\\Web",
+      "remotePath": "_site/Hub/",
+      "isPackaging": true,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 2,
+      "name": "物资管理",
+      "avatar": "/assets/img/assets.png",
+      "description": "物资管理",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.Assets\\Web",
+      "remotePath": "_site/Assets/",
+      "isPackaging": false,
+      "isPublishing": true,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 3,
+      "name": "考勤管理",
+      "avatar": "/assets/img/attendance.png",
+      "description": "考勤管理",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.Attendance\\Web",
+      "remotePath": "_site/Attendance/",
+      "isPackaging": true,
+      "isPublishing": true,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 4,
+      "name": "校园网盘",
+      "avatar": "/assets/img/cloudDisk.png",
+      "description": "校园网盘",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.CloudDisk\\Web",
+      "remotePath": "_site/CloudDisk/",
+      "isPackaging": false,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 5,
+      "name": "基础数据管理",
+      "avatar": "/assets/img/dataCenter.png",
+      "description": "基础数据管理",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.DataCenter\\Web",
+      "remotePath": "_site/DataCenter/",
+      "isPackaging": false,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 6,
+      "name": "就餐管理",
+      "avatar": "/assets/img/meal.png",
+      "description": "就餐管理",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.Meal\\Web",
+      "remotePath": "_site/Meal/",
+      "isPackaging": false,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 7,
+      "name": "党工团管理",
+      "avatar": "/assets/img/partyCorps.png",
+      "description": "党工团管理",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.PartyCorps\\Web",
+      "remotePath": "_site/PartyCorps/",
+      "isPackaging": false,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
+    },
+    {
+      "id": 8,
+      "name": "移动办公",
+      "avatar": "/assets/img/assetsH5.png",
+      "description": "移动办公（物资管理H5）",
+      "localPath": "D:\\local\\SmartLearn\\trunk\\RYSL.Assets\\H5",
+      "remotePath": "_site/H5/",
+      "isPackaging": false,
+      "isPublishing": false,
+      "previewUrl": "http://localhost:8080/index.html"
     }
   ]
 }

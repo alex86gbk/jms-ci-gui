@@ -4,21 +4,27 @@
   height: 64px;
   position: relative;
   transition: all 0.3s;
-  background: #002140;
+  background: #353241;
   overflow: hidden;
   img {
     display: inline-block;
     vertical-align: middle;
-    height: 32px;
+    height: 64px;
+    margin: 0 10px;
   }
   h1 {
-    color: white;
+    color: #d9d0c7;
     display: inline-block;
     vertical-align: middle;
     font-size: 20px;
     margin: 0 0 0 12px;
     font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: 600;
+    sub {
+      color: #d79691;
+      bottom: 0;
+      font-size: 100%;
+    }
   }
 }
 
@@ -26,10 +32,15 @@
   min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   z-index: 10;
-  .container {
-    background: rgba(255,255,255,.4);
-    padding: 6px;
-    margin: 10px;
+  background: #4a485c;
+  .menu {
+    background: #4a485c;
+
+    :global {
+      .ant-menu-item-selected {
+        background: #6385a7;
+      }
+    }
   }
   &.ligth {
     background-color: white;
@@ -69,5 +80,10 @@
   .ant-menu-submenu-title .sider-menu-item-img + span {
     transition: opacity 0.3s @ease-in-out, width 0.3s @ease-in-out;
     opacity: 1;
+  }
+  .nav-text {
+    a {
+      color: #ffffff;
+    }
   }
 }

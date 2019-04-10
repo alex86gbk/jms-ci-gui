@@ -12,3 +12,16 @@ export async function getProjectList(params) {
     data: params.payload,
   });
 }
+
+/**
+ * 获取服务器列表
+ * @param params
+ * @return {Promise.<Object>}
+ */
+export async function getServerList(params) {
+  return request({
+    url: '/common/getServerList',
+    method: 'POST',
+    data: params.payload,
+  });
+}
