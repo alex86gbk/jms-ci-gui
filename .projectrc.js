@@ -11,7 +11,7 @@ module.exports = {
   },
   "publicPath": [],
   "publicApiHost": {
-    "name": "http://10.0.2.151",
-    "port": "81"
+    "name": "http://localhost",
+    "port": "11234"
   },
 };
