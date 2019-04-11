@@ -9,7 +9,7 @@
       "description": "联调测试环境服务器",
       "username": "ssh_user",
       "auth": "key",
-      "key": "",
+      "secretKey": "ssh_user@10.0.2.151",
       "callNo": 25,
       "latestPublishAt": "2019-4-09 16:00:00",
       "status": 1,

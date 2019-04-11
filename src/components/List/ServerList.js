@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import moment from 'moment';
-import { Card, Button, Table, Divider, Badge } from 'antd';
+import { Card, Button, Table, Divider, Badge, Popconfirm } from 'antd';
 import PageHeaderLayout from '../Layout/PageHeaderLayout';
 import FilterServerListForm from '../Form/FilterServerListForm';
 import CreateServerForm from '../Form/CreateServerForm';
@@ -80,7 +80,14 @@ export default class ServerList extends PureComponent {
         <Fragment>
           <a onClick={() => this.showEditItem(record)}>编辑</a>
           <Divider type="vertical" />
-          <a>订阅警报</a>
+          <Popconfirm
+            title="确定删除该项目？"
+            onConfirm={() => this.confirmDeleteItem(record)}
+            okText="确定"
+            cancelText="取消"
+          >
+            <a>删除</a>
+          </Popconfirm>
         </Fragment>
       ),
     },
@@ -144,6 +151,11 @@ export default class ServerList extends PureComponent {
       visibleEditItem: true,
       record,
     });
+  };
+
+  confirmDeleteItem = (item) => {
+    const { onDeleteItem } = this.props;
+    onDeleteItem(item);
   };
 
   saveCreateItemFormRef = (formRef) => {

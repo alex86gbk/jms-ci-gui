@@ -84,12 +84,15 @@ const CreateProjectForm = Form.create()(
         this.setState({ loading: true });
       }
       if (info.file.status === 'done') {
-        form.setFieldsValue({ 'fileId': info.file.response.ReturnEntity });
+        message.success(`${info.file.name} 文件上传成功`);
+        form.setFieldsValue({ 'fileId': info.file.response.result.fileId });
         getBase64(info.file.originFileObj, imageUrl => this.setState({
           imageUrl,
           fileList: info.fileList,
           loading: false,
         }));
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} 文件上传失败`);
       }
       this.setState({ fileList: info.fileList });
     };
@@ -149,6 +152,11 @@ const CreateProjectForm = Form.create()(
           afterClose={this.resetForm}
         >
           <Form layout="horizontal">
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('id', {
+                initialValue: data.id,
+              })}
+            </FormItem>
             <FormItem style={{ display: 'none' }}>
               {getFieldDecorator('fileId')}
             </FormItem>
@@ -218,7 +226,7 @@ const CreateProjectForm = Form.create()(
                 <Upload
                   name="file"
                   withCredentials
-                  action=""
+                  action={service.uploadFile()}
                   listType="picture-card"
                   beforeUpload={beforeUpload}
                   onChange={this.onChangeFile}

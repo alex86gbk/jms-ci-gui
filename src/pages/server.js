@@ -1,6 +1,6 @@
 import React from 'React';
 import ReactDOM from 'ReactDOM';
-import { Layout, LocaleProvider } from 'antd';
+import { Layout, LocaleProvider, notification } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import SiderMenu from '../components/SiderMenu/SiderMenu';
 import GlobalHeader from '../components/GlobalHeader/GlobalHeader';
@@ -28,7 +28,7 @@ class Server extends React.Component {
   }
 
   /**
-   * 获取项目列表
+   * 获取服务器列表
    */
   getData = () => {
     this.setState({ loading: true });
@@ -48,7 +48,57 @@ class Server extends React.Component {
     });
   };
 
-  createProject = () => {};
+  saveData = (values) => {
+    this.setState({ loading: true });
+    service.saveServer({
+      payload: {
+        'id': values.id,
+        'name': values.name,
+        'host': values.host,
+        'description': values.description,
+        'platform': values.platform,
+        'username': values.username,
+        'auth': values.auth,
+        'password': values.password,
+        'fileId': values.fileId,
+      },
+    }).then((res) => {
+      this.getData();
+      if (res.result.status === 1) {
+        notification.success({
+          message: values.id ? '保存成功' : '新增成功',
+          description: values.name,
+        });
+      } else {
+        notification.error({
+          message: `${(values.id ? '保存失败' : '新增失败')}：${res.result.errMsg}`,
+          description: values.name,
+        });
+      }
+    });
+  };
+
+  deleteServer = (values) => {
+    this.setState({ loading: true });
+    service.deleteServer({
+      payload: {
+        'id': values.id,
+      },
+    }).then((res) => {
+      this.getData();
+      if (res.result.status === 1) {
+        notification.success({
+          message: '删除成功',
+          description: values.name,
+        });
+      } else {
+        notification.error({
+          message: `删除失败：${res.result.errMsg}`,
+          description: values.name,
+        });
+      }
+    });
+  };
 
   /**
    * 渲染
@@ -71,7 +121,9 @@ class Server extends React.Component {
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <LocaleProvider locale={zhCN}>
               <ServerList
-                onCreateItem={this.createProject}
+                onCreateItem={this.saveData}
+                onEditItem={this.saveData}
+                onDeleteItem={this.deleteServer}
                 loading={loading}
                 list={data}
               />

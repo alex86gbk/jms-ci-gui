@@ -1,28 +1,11 @@
 import React from 'react';
 import { Modal, Form, Input, Upload, message, Button, Icon, Radio } from 'antd';
+import * as service from '../../services/commonServices';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
-const uploadProps = {
-  name: 'file',
-  action: '//jsonplaceholder.typicode.com/posts/',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
 
 /**
  * 新建服务器
@@ -31,6 +14,7 @@ const EditServerForm = Form.create()(
   class extends React.Component {
     state = {
       auth: 'password',
+      fileList: [],
     };
 
     /**
@@ -39,14 +23,23 @@ const EditServerForm = Form.create()(
     componentDidUpdate(prevProps) {
       const { data, visible } = this.props;
       if (visible !== prevProps.visible) {
-        this.renderAuth(data);
+        this.initState(data);
       }
     }
 
-    renderAuth = (data) => {
+    initState = (data) => {
       this.setState({
         auth: data.auth,
       });
+      if (data.secretKey) {
+        this.setState({
+          fileList: [{
+            uid: data.id,
+            name: data.secretKey,
+            status: 'done',
+          }],
+        });
+      }
     };
 
     onAuthChange = (event) => {
@@ -56,10 +49,11 @@ const EditServerForm = Form.create()(
     };
 
     resetForm = () => {
-      const { data, form } = this.props;
+      const { form } = this.props;
       form.resetFields();
       this.setState({
-        auth: data.auth,
+        auth: 'password',
+        fileList: [],
       });
     };
 
@@ -68,7 +62,8 @@ const EditServerForm = Form.create()(
      * @return {XML}
      */
     render() {
-      const { auth } = this.state;
+      const that = this;
+      const { auth, fileList } = this.state;
       const { visible, onCancel, onEdit, form, data } = this.props;
       const { getFieldDecorator } = form;
 
@@ -80,6 +75,35 @@ const EditServerForm = Form.create()(
         wrapperCol: {
           xs: { span: 24 },
           sm: { span: 16 },
+        },
+      };
+      const uploadProps = {
+        name: 'file',
+        action: service.uploadFile(),
+        headers: {
+          authorization: 'authorization-text',
+        },
+        fileList,
+        onChange(info) {
+          if (info.file.status === 'done') {
+            message.success(`${info.file.name} 文件上传成功`);
+            form.setFieldsValue({ 'fileId': info.file.response.result.fileId });
+            that.setState({
+              fileList: info.fileList,
+            });
+          } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} 文件上传失败`);
+          }
+          that.setState({ fileList: info.fileList });
+        },
+        onRemove() {
+          return new Promise((resolve) => {
+            that.setState({
+              fileList: [],
+            }, () => {
+              resolve([]);
+            });
+          });
         },
       };
 
@@ -97,6 +121,14 @@ const EditServerForm = Form.create()(
           afterClose={this.resetForm}
         >
           <Form layout="horizontal">
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('id', {
+                initialValue: data.id,
+              })}
+            </FormItem>
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('fileId')}
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="服务器名称"
@@ -203,15 +235,23 @@ const EditServerForm = Form.create()(
               label="秘钥"
               style={{ display: auth === 'key' ? 'block' : 'none' }}
             >
-              {getFieldDecorator('fileId', {
+              {getFieldDecorator('key', {
                 rules: [{ required: auth === 'key', message: '请上传秘钥!' }],
                 initialValue: data.key,
               })(
-                <Upload {...uploadProps}>
-                  <Button>
-                    <Icon type="upload" />
-                    点击上传
-                  </Button>
+                <Upload
+                  {...uploadProps}
+                >
+                  {
+                    fileList.length >= 1
+                      ? null
+                      : (
+                        <Button>
+                          <Icon type="upload" />
+                          点击上传
+                        </Button>
+                      )
+                  }
                 </Upload>
               )}
             </FormItem>

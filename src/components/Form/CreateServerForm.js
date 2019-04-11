@@ -1,28 +1,11 @@
 import React from 'react';
 import { Modal, Form, Input, Upload, message, Button, Icon, Radio } from 'antd';
+import * as service from '../../services/commonServices';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
-const uploadProps = {
-  name: 'file',
-  action: '//jsonplaceholder.typicode.com/posts/',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
 
 /**
  * 新建服务器
@@ -31,6 +14,7 @@ const CreateServerForm = Form.create()(
   class extends React.Component {
     state = {
       auth: 'password',
+      fileList: [],
     };
 
     onAuthChange = (event) => {
@@ -49,7 +33,8 @@ const CreateServerForm = Form.create()(
      * @return {XML}
      */
     render() {
-      const { auth } = this.state;
+      const that = this;
+      const { auth, fileList } = this.state;
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
 
@@ -61,6 +46,34 @@ const CreateServerForm = Form.create()(
         wrapperCol: {
           xs: { span: 24 },
           sm: { span: 16 },
+        },
+      };
+      const uploadProps = {
+        name: 'file',
+        action: service.uploadFile(),
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange(info) {
+          if (info.file.status === 'done') {
+            message.success(`${info.file.name} 文件上传成功`);
+            form.setFieldsValue({ 'fileId': info.file.response.result.fileId });
+            that.setState({
+              fileList: info.fileList,
+            });
+          } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} 文件上传失败`);
+          }
+          that.setState({ fileList: info.fileList });
+        },
+        onRemove() {
+          return new Promise((resolve) => {
+            that.setState({
+              fileList: [],
+            }, () => {
+              resolve([]);
+            });
+          });
         },
       };
 
@@ -78,6 +91,9 @@ const CreateServerForm = Form.create()(
           afterClose={this.resetForm}
         >
           <Form layout="horizontal">
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('fileId')}
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="服务器名称"
@@ -136,7 +152,7 @@ const CreateServerForm = Form.create()(
               {...formItemLayout}
               label="用户名"
             >
-              {getFieldDecorator('localPath', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: '用户名不能为空!' }],
               })(
                 <Input
@@ -164,7 +180,7 @@ const CreateServerForm = Form.create()(
               label="密码"
               style={{ display: auth === 'password' ? 'block' : 'none' }}
             >
-              {getFieldDecorator('remotePath', {
+              {getFieldDecorator('password', {
                 rules: [{ required: auth === 'password', message: '密码不能为空!' }],
               })(
                 <Input
@@ -178,14 +194,22 @@ const CreateServerForm = Form.create()(
               label="秘钥"
               style={{ display: auth === 'key' ? 'block' : 'none' }}
             >
-              {getFieldDecorator('fileId', {
+              {getFieldDecorator('key', {
                 rules: [{ required: auth === 'key', message: '请上传秘钥!' }],
               })(
-                <Upload {...uploadProps}>
-                  <Button>
-                    <Icon type="upload" />
-                    点击上传
-                  </Button>
+                <Upload
+                  {...uploadProps}
+                >
+                  {
+                    fileList.length >= 1
+                      ? null
+                      : (
+                        <Button>
+                          <Icon type="upload" />
+                          点击上传
+                        </Button>
+                      )
+                  }
                 </Upload>
               )}
             </FormItem>

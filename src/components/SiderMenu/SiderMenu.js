@@ -56,7 +56,7 @@ class SiderMenu extends React.Component {
           theme="dark"
           mode="inline"
           className={styles.menu}
-          style={{ padding: '16px 0', width: '100%' }}
+          style={{ padding: '7px 0', width: '100%' }}
           defaultSelectedKeys={[openKeys || 'index']}
           selectedKeys={[selectedKeys]}
         >

@@ -66,8 +66,8 @@ export default class ProjectList extends PureComponent {
     });
   };
 
-  handleSelectServer = () => {
-    const { onSelectServer } = this.props;
+  handlePublishProject = () => {
+    const { onPublishItem } = this.props;
     const { form } = this.selectServerFormRef.props;
     form.validateFields((err, values) => {
       if (err) {
@@ -75,21 +75,25 @@ export default class ProjectList extends PureComponent {
       }
 
       this.setState({ visibleSelectServer: false });
-      onSelectServer(values);
+      onPublishItem(values);
+    });
+  };
+
+  handlePackageProject = (item) => {
+    const { onPackageItem } = this.props;
+    onPackageItem(item);
+  };
+
+  showSelectServer = (record) => {
+    this.setState({
+      visibleSelectServer: true,
+      record,
     });
   };
 
   cancelSelectServer = () => {
     this.setState({
       visibleSelectServer: false,
-    });
-  };
-
-  handlePackageProject = () => {};
-
-  handlePublishProject = (projectId) => {
-    this.setState({
-      visibleSelectServer: true,
     });
   };
 
@@ -106,7 +110,10 @@ export default class ProjectList extends PureComponent {
     });
   };
 
-  confirmDeleteItem = (projectId) => {};
+  confirmDeleteItem = (item) => {
+    const { onDeleteItem } = this.props;
+    onDeleteItem(item);
+  };
 
   saveCreateItemFormRef = (formRef) => {
     this.createItemFormRef = formRef;
@@ -174,7 +181,7 @@ export default class ProjectList extends PureComponent {
           />
           <Popconfirm
             title="确定删除该项目？"
-            onConfirm={() => this.confirmDeleteItem(item.id)}
+            onConfirm={() => this.confirmDeleteItem(item)}
             okText="确定"
             cancelText="取消"
           >
@@ -195,8 +202,8 @@ export default class ProjectList extends PureComponent {
     const actions = (item) => {
       if (!item.isPackaging && !item.isPublishing) {
         return [
-          <a onClick={this.handlePackageProject}>打包</a>,
-          <a onClick={() => this.handlePublishProject(item.id)}>发布</a>,
+          <a onClick={() => this.handlePackageProject(item)}>打包</a>,
+          <a onClick={() => this.showSelectServer(item)}>发布</a>,
         ];
       } else if (item.isPackaging && !item.isPublishing) {
         return [
@@ -232,8 +239,9 @@ export default class ProjectList extends PureComponent {
         />
         <SelectServerForm
           wrappedComponentRef={this.saveSelectServerFormRef}
+          data={record}
           visible={visibleSelectServer}
-          onCreate={this.handleSelectServer}
+          onSelect={this.handlePublishProject}
           onCancel={this.cancelSelectServer}
         />
         <div className={styles.cardList}>

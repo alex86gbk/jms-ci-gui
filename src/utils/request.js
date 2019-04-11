@@ -8,7 +8,7 @@ const apiHost = cookie.get('ApiHost') === 'undefined' ? `http://localhost:${eval
 /**
  * 请求方法
  * @param options
- * @return {Promise}
+ * @return {Promise | String}
  */
 export default function request(options) {
   let errCode;
@@ -32,6 +32,10 @@ export default function request(options) {
 
   if (!mock.ReverseProxy) {
     param.url = apiHost + param.url;
+  }
+
+  if (param.sync) {
+    return param.url;
   }
 
   return axios.request(param)

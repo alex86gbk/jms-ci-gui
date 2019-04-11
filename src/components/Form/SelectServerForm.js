@@ -19,23 +19,22 @@ const SelectServerForm = Form.create()(
      * 组件装载
      */
     componentDidMount() {
+      this.getServerData();
     }
 
     /**
-     * 获取服务器列表
+     * 获取服务器下拉列表
      */
     getServerData = () => {
       this.setState({
         loading: true,
       });
-      service.getServerList({
-        payload: {
-          'TypeFlag': 2,
-        },
+      service.getServerSelectList({
+        payload: {},
       }).then((res) => {
         const serverList = [];
         res.list.forEach((item) => {
-          serverList.push(<Option value={item.id}>{item.name}</Option>);
+          serverList.push(<Option value={item.id}>{item.host}</Option>);
         });
         this.setState({
           serverList,
@@ -47,9 +46,6 @@ const SelectServerForm = Form.create()(
     resetForm = () => {
       const { form } = this.props;
       form.resetFields();
-      this.setState({
-        serverList: [],
-      });
     };
 
     /**
@@ -58,7 +54,7 @@ const SelectServerForm = Form.create()(
      */
     render() {
       const { serverList, loading } = this.state;
-      const { visible, onCancel, onSelect, form } = this.props;
+      const { visible, onCancel, onSelect, form, data } = this.props;
       const { getFieldDecorator } = form;
 
       const formItemLayout = {
@@ -84,11 +80,21 @@ const SelectServerForm = Form.create()(
           afterClose={this.resetForm}
         >
           <Form layout="horizontal">
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('projectId', {
+                initialValue: data.id,
+              })}
+            </FormItem>
+            <FormItem style={{ display: 'none' }}>
+              {getFieldDecorator('name', {
+                initialValue: data.name,
+              })}
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="选择服务器"
             >
-              {getFieldDecorator('id', {
+              {getFieldDecorator('serverId', {
                 rules: [{ required: true, message: '服务器不能为空!' }],
               })(
                 <Select
