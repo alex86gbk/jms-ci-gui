@@ -101,7 +101,7 @@ const FilterServerListForm = Form.create()(
             <Col md={6} sm={24}>
               <FormItem label="使用状态">
                 {getFieldDecorator('status')(
-                  <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Select placeholder="请选择">
                     <Option value="0">关闭</Option>
                     <Option value="1">运行中</Option>
                   </Select>
@@ -113,7 +113,7 @@ const FilterServerListForm = Form.create()(
             <Col md={9} sm={24}>
               <FormItem label="平台类型">
                 {getFieldDecorator('platform')(
-                  <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Select placeholder="请选择">
                     <Option value="windows">Windows</Option>
                     <Option value="linux">Linux</Option>
                     <Option value="unix">Unix</Option>
@@ -125,7 +125,7 @@ const FilterServerListForm = Form.create()(
             <Col md={9} sm={24}>
               <FormItem label="认证方式">
                 {getFieldDecorator('auth')(
-                  <Select placeholder="请选择" style={{ width: '100%' }}>
+                  <Select placeholder="请选择">
                     <Option value="password">密码</Option>
                     <Option value="key">秘钥</Option>
                   </Select>
