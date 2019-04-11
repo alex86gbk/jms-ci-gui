@@ -48,22 +48,17 @@ const FilterServerListForm = Form.create()(
       return (
         <Form onSubmit={this.handleSubmit} layout="inline">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={8} sm={24}>
-              <FormItem label="域名（IP）">
+            <Col md={9} sm={24}>
+              <FormItem label="域名（或 IP）">
                 {getFieldDecorator('host')(<Input placeholder="请输入" />)}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
-              <FormItem label="使用状态">
-                {getFieldDecorator('status')(
-                  <Select placeholder="请选择" style={{ width: '100%' }}>
-                    <Option value="0">关闭</Option>
-                    <Option value="1">运行中</Option>
-                  </Select>
-                )}
+            <Col md={9} sm={24}>
+              <FormItem label="服务器名称">
+                {getFieldDecorator('name')(<Input placeholder="请输入" />)}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
+            <Col md={6} sm={24}>
               <span className={styles.submitButtons}>
                 <Button type="primary" htmlType="submit">
                   查询
@@ -87,18 +82,23 @@ const FilterServerListForm = Form.create()(
      * @return {XML}
      */
     renderAdvancedForm() {
-      const { form, onSubmitFilter } = this.props;
+      const { form } = this.props;
       const { getFieldDecorator } = form;
 
       return (
-        <Form onSubmit={onSubmitFilter} layout="inline">
+        <Form onSubmit={this.handleSubmit} layout="inline">
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={8} sm={24}>
-              <FormItem label="域名（IP）">
+            <Col md={9} sm={24}>
+              <FormItem label="域名（或 IP）">
                 {getFieldDecorator('host')(<Input placeholder="请输入" />)}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
+            <Col md={9} sm={24}>
+              <FormItem label="服务器名称">
+                {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+              </FormItem>
+            </Col>
+            <Col md={6} sm={24}>
               <FormItem label="使用状态">
                 {getFieldDecorator('status')(
                   <Select placeholder="请选择" style={{ width: '100%' }}>
@@ -108,14 +108,9 @@ const FilterServerListForm = Form.create()(
                 )}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
-              <FormItem label="服务器名称">
-                {getFieldDecorator('name')(<Input placeholder="请输入" />)}
-              </FormItem>
-            </Col>
           </Row>
           <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-            <Col md={8} sm={24}>
+            <Col md={9} sm={24}>
               <FormItem label="平台类型">
                 {getFieldDecorator('platform')(
                   <Select placeholder="请选择" style={{ width: '100%' }}>
@@ -127,7 +122,7 @@ const FilterServerListForm = Form.create()(
                 )}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
+            <Col md={9} sm={24}>
               <FormItem label="认证方式">
                 {getFieldDecorator('auth')(
                   <Select placeholder="请选择" style={{ width: '100%' }}>
@@ -137,21 +132,21 @@ const FilterServerListForm = Form.create()(
                 )}
               </FormItem>
             </Col>
+            <Col md={6} sm={24}>
+              <span className={styles.submitButtons}>
+                <Button type="primary" htmlType="submit">
+                  查询
+                </Button>
+                <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+                  重置
+                </Button>
+                <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                  收起&nbsp;
+                  <Icon type="up" />
+                </a>
+              </span>
+            </Col>
           </Row>
-          <div style={{ overflow: 'hidden' }}>
-            <span style={{ float: 'right', marginBottom: 24 }}>
-              <Button type="primary" htmlType="submit">
-                查询
-              </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-                重置
-              </Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                收起&nbsp;
-                <Icon type="up" />
-              </a>
-            </span>
-          </div>
         </Form>
       );
     }

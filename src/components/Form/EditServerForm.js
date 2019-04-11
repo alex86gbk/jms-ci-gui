@@ -145,7 +145,7 @@ const EditServerForm = Form.create()(
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="域名（IP）"
+              label="域名（或 IP）"
             >
               {getFieldDecorator('host', {
                 rules: [{ required: true, message: '服务器IP/域名不能为空!' }],

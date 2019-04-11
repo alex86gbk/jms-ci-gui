@@ -99,7 +99,9 @@ export default class ServerList extends PureComponent {
   componentDidMount() {
   }
 
-  handleSubmitFilter = () => {
+  handleSubmitFilter = (values) => {
+    const { onFilterItem } = this.props;
+    onFilterItem(values);
   };
 
   handleCreateItem = () => {

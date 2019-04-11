@@ -16,6 +16,11 @@ const { Header, Content, Footer } = Layout;
  */
 class Server extends React.Component {
   state = {
+    host: '',
+    status: '',
+    name: '',
+    platform: '',
+    auth: '',
     data: [],
     loading: false,
   };
@@ -31,9 +36,16 @@ class Server extends React.Component {
    * 获取服务器列表
    */
   getData = () => {
+    const { host, status, name, platform, auth } = this.state;
     this.setState({ loading: true });
     service.getServerList({
-      payload: {},
+      payload: {
+        'host': host,
+        'status': status,
+        'name': name,
+        'platform': platform,
+        'auth': auth,
+      },
     }).then((res) => {
       this.setState({
         loading: false,
@@ -45,6 +57,18 @@ class Server extends React.Component {
           return item;
         }),
       });
+    });
+  };
+
+  handleFilterData = (values) => {
+    this.setState({
+      host: values.host,
+      status: values.status,
+      name: values.name,
+      platform: values.platform,
+      auth: values.auth,
+    }, () => {
+      this.getData();
     });
   };
 
@@ -121,6 +145,7 @@ class Server extends React.Component {
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <LocaleProvider locale={zhCN}>
               <ServerList
+                onFilterItem={this.handleFilterData}
                 onCreateItem={this.saveData}
                 onEditItem={this.saveData}
                 onDeleteItem={this.deleteServer}
