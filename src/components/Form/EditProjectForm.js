@@ -143,8 +143,8 @@ const CreateProjectForm = Form.create()(
           visible={visible}
           centered
           style={{ top: 10 }}
-          title="添加项目"
-          okText="添加"
+          title="编辑项目"
+          okText="保存"
           cancelText="取消"
           width={500}
           onCancel={onCancel}
