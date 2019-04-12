@@ -8,24 +8,16 @@ import EditServerForm from '../Form/EditServerForm';
 
 import styles from './TableList.less';
 
-const status = ['关闭', '运行中', '已上线', '异常'];
-const statusBadgeMap = ['default', 'processing', 'success', 'error'];
+const status = ['关闭', '在线'];
+const statusBadgeMap = ['default', 'processing'];
 const statusFilterMap = [
   {
     text: '关闭',
     value: 0,
   },
   {
-    text: '运行中',
+    text: '在线',
     value: 1,
-  },
-  {
-    text: '已上线',
-    value: 2,
-  },
-  {
-    text: '异常',
-    value: 3,
   },
 ];
 
