@@ -34,7 +34,7 @@ const EditServerForm = Form.create()(
       if (data.secretKey) {
         this.setState({
           fileList: [{
-            uid: data.id,
+            uid: data.fileId,
             name: data.secretKey,
             status: 'done',
           }],
@@ -127,7 +127,9 @@ const EditServerForm = Form.create()(
               })}
             </FormItem>
             <FormItem style={{ display: 'none' }}>
-              {getFieldDecorator('fileId')}
+              {getFieldDecorator('fileId', {
+                initialValue: data.fileId,
+              })}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -191,7 +193,7 @@ const EditServerForm = Form.create()(
               {...formItemLayout}
               label="用户名"
             >
-              {getFieldDecorator('localPath', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: '用户名不能为空!' }],
                 initialValue: data.username,
               })(
@@ -220,7 +222,7 @@ const EditServerForm = Form.create()(
               label="密码"
               style={{ display: auth === 'password' ? 'block' : 'none' }}
             >
-              {getFieldDecorator('remotePath', {
+              {getFieldDecorator('password', {
                 rules: [{ required: auth === 'password', message: '密码不能为空!' }],
                 initialValue: data.password,
               })(
