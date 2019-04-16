@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import moment from 'moment';
-import { Card, Button, Table, Divider, Badge, Popconfirm } from 'antd';
+import { Card, Button, Table, Divider, Badge, Popconfirm, Icon, Spin } from 'antd';
 import PageHeaderLayout from '../Layout/PageHeaderLayout';
 import FilterServerListForm from '../Form/FilterServerListForm';
 import CreateServerForm from '../Form/CreateServerForm';
@@ -59,6 +59,10 @@ export default class ServerList extends PureComponent {
       filters: statusFilterMap,
       onFilter: (value, record) => record.status.toString() === value,
       render(val) {
+        if (val === 2) {
+          const pendingIcon = <Icon type="sync" spin />;
+          return <Spin indicator={pendingIcon} />;
+        }
         return <Badge status={statusBadgeMap[val]} text={status[val]} />;
       },
     },
@@ -67,7 +71,7 @@ export default class ServerList extends PureComponent {
       dataIndex: 'latestPublishAt',
       sorter: true,
       align: 'right',
-      render: val => <span>{ val ? moment(val).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>,
+      render: val => <span>{ val ? moment(new Date(val)).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>,
     },
     {
       title: '操作',

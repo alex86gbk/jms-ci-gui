@@ -56,6 +56,11 @@ class Server extends React.Component {
           });
           return item;
         }),
+      }, () => {
+        const { data } = this.state;
+        data.forEach((item) => {
+          this.checkServerStatus(item.id);
+        });
       });
     });
   };
@@ -121,6 +126,36 @@ class Server extends React.Component {
           description: values.name,
         });
       }
+    });
+  };
+
+  checkServerStatus = (id) => {
+    service.checkServerStatus({
+      payload: {
+        'id': id,
+      },
+    }).then((res) => {
+      const { status } = res.result;
+      const { data } = this.state;
+      const copyData = JSON.parse(JSON.stringify(data));
+
+      copyData.map((item) => {
+        Object.defineProperty(item, 'key', {
+          value: item.id,
+          writable: false,
+        });
+        if (item.id === id) {
+          Object.defineProperty(item, 'status', {
+            value: status,
+            writable: true,
+          });
+        }
+        return item;
+      });
+
+      this.setState({
+        data: copyData,
+      });
     });
   };
 

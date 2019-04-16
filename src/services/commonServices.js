@@ -118,6 +118,19 @@ export async function deleteServer(params) {
 }
 
 /**
+ * 检查服务器状态
+ * @param params
+ * @return {Promise.<Object>}
+ */
+export async function checkServerStatus(params) {
+  return request({
+    url: '/common/checkServerStatus',
+    method: 'POST',
+    data: params.payload,
+  });
+}
+
+/**
  * 上传文件
  * @return {string}
  */
