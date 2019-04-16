@@ -60,11 +60,11 @@ export default class ServerList extends PureComponent {
       },
     },
     {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
+      title: '上次发布时间',
+      dataIndex: 'latestPublishAt',
       sorter: true,
       align: 'right',
-      render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      render: val => <span>{ val ? moment(val).format('YYYY-MM-DD HH:mm:ss') : '--'}</span>,
     },
     {
       title: '操作',
