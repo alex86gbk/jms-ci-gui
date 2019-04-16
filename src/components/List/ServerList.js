@@ -49,6 +49,9 @@ export default class ServerList extends PureComponent {
       dataIndex: 'callNo',
       sorter: true,
       align: 'right',
+      render(val) {
+        return val || '--';
+      },
     },
     {
       title: '状态',
