@@ -49,7 +49,8 @@ class SiderMenu extends React.Component {
           <img src={logo} alt="logo" />
           <h1>
             JMS -
-            <sub>&nbsp;CI</sub>
+            <em>&nbsp;CI&nbsp;</em>
+            <sup>(α)</sup>
           </h1>
         </div>
         <Menu
