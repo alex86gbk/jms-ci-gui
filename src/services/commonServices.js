@@ -141,3 +141,16 @@ export function uploadFile() {
     sync: true,
   });
 }
+
+/**
+ * 退出
+ * @param params
+ * @return {Promise.<Object>}
+ */
+export function exit(params) {
+  return request({
+    url: '/common/exit',
+    method: 'POST',
+    data: params.payload,
+  });
+}

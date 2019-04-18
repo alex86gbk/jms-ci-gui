@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Menu, Icon, Dropdown, Avatar } from 'antd';
+import { Menu, Icon, Dropdown, Avatar, message } from 'antd';
+import * as service from '../../services/commonServices';
 import styles from './GlobalHeader.less';
 
 import avatar from '../../assets/images/avatar_24px.png';
@@ -13,6 +14,21 @@ class GlobalHeader extends React.Component {
   toggle = () => {
     const { store } = this.props;
     store.onCollapse(store.collapsed);
+  };
+
+  exit = () => {
+    service.exit({
+      payload: {},
+    }).then((res) => {
+      if (res.result.status === 1) {
+        message.success('退出成功', 1);
+      }
+      setTimeout(() => {
+        window.opener = null;
+        window.open('', '_self');
+        window.close();
+      }, 1000);
+    });
   };
 
   /**
@@ -38,7 +54,7 @@ class GlobalHeader extends React.Component {
           错误日志
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="logout">
+        <Menu.Item key="logout" onClick={this.exit}>
           <Icon type="logout" />
           退出
         </Menu.Item>
