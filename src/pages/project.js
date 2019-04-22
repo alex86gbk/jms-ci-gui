@@ -144,18 +144,18 @@ class Project extends React.Component {
     const { loading, data } = this.state;
 
     return (
-      <Layout>
-        <SiderMenu
-          store={storeSider}
-        />
+      <LocaleProvider locale={zhCN}>
         <Layout>
-          <Header style={{ padding: 0 }}>
-            <GlobalHeader
-              store={storeSider}
-            />
-          </Header>
-          <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-            <LocaleProvider locale={zhCN}>
+          <SiderMenu
+            store={storeSider}
+          />
+          <Layout>
+            <Header style={{ padding: 0 }}>
+              <GlobalHeader
+                store={storeSider}
+              />
+            </Header>
+            <Content style={{ margin: '24px 24px 0', height: '100%' }}>
               <ProjectList
                 onCreateItem={this.saveData}
                 onEditItem={this.saveData}
@@ -165,13 +165,13 @@ class Project extends React.Component {
                 loading={loading}
                 list={data}
               />
-            </LocaleProvider>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            JMS CI ©2019 Created by Alex
-          </Footer>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>
+              JMS CI ©2019 Created by Alex
+            </Footer>
+          </Layout>
         </Layout>
-      </Layout>
+      </LocaleProvider>
     );
   }
 }

@@ -143,6 +143,19 @@ export function uploadFile() {
 }
 
 /**
+ * 获取错误日志
+ * @param params
+ * @return {Promise.<Object>}
+ */
+export function getErrorLog(params) {
+  return request({
+    url: '/common/getErrorLog',
+    method: 'POST',
+    data: params.payload,
+  });
+}
+
+/**
  * 退出
  * @param params
  * @return {Promise.<Object>}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Menu, Icon, Dropdown, Avatar, message } from 'antd';
+import { Menu, Icon, Dropdown, Avatar, message, Modal, Spin, Empty } from 'antd';
 import * as service from '../../services/commonServices';
 import styles from './GlobalHeader.less';
 
@@ -11,9 +11,34 @@ import avatar from '../../assets/images/avatar_24px.png';
  */
 @observer
 class GlobalHeader extends React.Component {
+  state = {
+    visible: false,
+    loading: false,
+    log: '',
+  };
+
   toggle = () => {
     const { store } = this.props;
     store.onCollapse(store.collapsed);
+  };
+
+  getErrorLog = () => {
+    this.setState({
+      visible: true,
+      loading: true,
+    });
+    service.getErrorLog({
+      payload: {},
+    }).then((res) => {
+      this.setState({
+        loading: false,
+        log: res.result.errMsg,
+      });
+    });
+  };
+
+  handleCancal = () => {
+    this.setState({ visible: false });
   };
 
   exit = () => {
@@ -36,6 +61,7 @@ class GlobalHeader extends React.Component {
    * @return {XML}
    */
   render() {
+    const { visible, loading, log } = this.state;
     const { store } = this.props;
     const { collapsed } = store;
 
@@ -49,7 +75,7 @@ class GlobalHeader extends React.Component {
           <Icon type="setting" />
           设置
         </Menu.Item>
-        <Menu.Item key="triggerError">
+        <Menu.Item key="triggerError" onClick={this.getErrorLog}>
           <Icon type="close-circle" />
           错误日志
         </Menu.Item>
@@ -63,6 +89,21 @@ class GlobalHeader extends React.Component {
 
     return (
       <div className={styles.header}>
+        <Modal
+          title="错误日志"
+          centered
+          visible={visible}
+          footer={null}
+          onCancel={this.handleCancal}
+        >
+          {
+            loading
+              ? <Spin />
+              : log
+                ? <div style={{ maxHeight: 300, overflow: 'auto' }}>{log}</div>
+                : <Empty />
+          }
+        </Modal>
         <Icon
           className={styles.trigger}
           type={collapsed ? 'menu-unfold' : 'menu-fold'}

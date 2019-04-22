@@ -146,14 +146,9 @@ export default class ProjectList extends PureComponent {
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>
-          在这里添加，配置项目。包括名称，图标，介绍，本地项目路径，远程发布路径。
+          在这里添加/配置项目：名称，图标，介绍，本地项目路径，远程发布路径。
         </p>
-        <div className={styles.contentLink}>
-          <a>
-            <img alt="" src={quickStart} />
-            快速开始
-          </a>
-        </div>
+        <div className={styles.contentLink} />
       </div>
     );
 
