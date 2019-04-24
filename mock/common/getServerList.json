@@ -9,6 +9,7 @@
       "username": "ssh_user",
       "auth": "key",
       "secretKey": "ssh_user@10.0.2.151",
+      "fileId": "1",
       "callNo": 25,
       "latestPublishAt": "2019-4-09 16:00:00",
       "status": 2
