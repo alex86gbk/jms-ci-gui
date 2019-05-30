@@ -8,7 +8,6 @@ import SelectServerForm from '../Form/SelectServerForm';
 import styles from './CardList.less';
 
 import extraImg from '../../assets/images/project.png';
-import quickStart from '../../assets/images/quick-start.svg';
 import defaultIcon from '../../assets/images/default.png';
 
 /**
